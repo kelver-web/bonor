@@ -1,0 +1,262 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<div id="hero-animated" class="hero-animated d-flex align-items-center pt-8">
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center"
+        data-aos="zoom-out">
+        <div class="container d-flex flex-column align-items-lg-start">
+            <div class="container pt-2">
+                <table class="table table-hover" id="veiculo">
+                    <h2>Controle de Veículos</h2>
+                    <thead class="bg-success">
+                        <tr>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Cor</th>
+                            <th scope="col">Placa</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for veiculo in veiculos %}
+                        <tr>
+                            <td>{{ veiculo.brand }}</td>
+                            <td>{{ veiculo.vehicle }}</td>
+                            <td>{{ veiculo.color }}</td>
+                            <td>{{ veiculo.plate }}</td>
+                            <td>{{ veiculo.date_create }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class=" text-dark text-center">
+                        <tr>
+                          <th>Marca</th>
+                          <th>Modelo</th>
+                          <th>Cor</th>
+                          <th>Placa</th>
+                          <th>Data</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="hero-animated" class="hero-animated d-flex align-items-center p-4">
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center"
+        data-aos="zoom-out">
+        <div class="container d-flex flex-column align-items-lg-start">
+            <div class="container pt-2">
+                <table class="table table-hover" id="abastecimento">
+                    <h2>Controle de Abastecimento</h2>
+                    <thead class="bg-success">
+                        <tr>
+                            <th scope="col">Litros</th>
+                            <th scope="col">Km</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Pg</th>
+                            <th scope="col">Motorista</th>
+                            <th scope="col">Veículo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Dt.abast</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for abastecimento in abastecimentos %}
+                        <tr>
+                            <td>{{ abastecimento.amount_ofag_liters }}</td>
+                            <td>{{ abastecimento.milee }}</td>
+                            <td>{{ abastecimento.supply_value }}</td>
+                            <td>{{ abastecimento.payment }}</td>
+                            <td>{{ abastecimento.driver_name }}</td>
+                            <td>{{ abastecimento.vehicle }}</td>
+                            <td>{{ abastecimento.mark_supply }}</td>
+                            <td>{{ abastecimento.date_supply }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class=" text-dark text-center">
+                        <th>Litros</th>
+                        <th>Km</th>
+                        <th>Valor</th>
+                        <th>Pg</th>
+                        <th>Motorista</th>
+                        <th>Veículo</th>
+                        <th>Marca</th>
+                        <th>Dt.abast</th>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="hero-animated" class="hero-animated d-flex align-items-center p-4">
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center"
+        data-aos="zoom-out">
+        <div class="container d-flex flex-column align-items-lg-start">
+            <div class="container pt-2">
+                <table class="table table-hover" id="manutencao">
+                    <h2>Controle de Manutenção</h2>
+                    <thead class="bg-success">
+                        <tr>
+                            <th scope="col">Dt.saída</th>
+                            <th scope="col">Serviço</th>
+                            <th scope="col">Dt.entrega</th>
+                            <th scope="col">Fornecedor</th>
+                            <th scope="col">Veículo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Prox.serviço</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for manutencao in manutencoes %}
+                        <tr>
+                            <td>{{ manutencao.departure_date }}</td>
+                            <td>{{ manutencao.service }}</td>
+                            <td>{{ manutencao.delivery_date }}</td>
+                            <td>{{ manutencao.provider }}</td>
+                            <td>{{ manutencao.vehicle }}</td>
+                            <td>{{ manutencao.mark_main }}</td>
+                            <td>{{ manutencao.value }}</td>
+                            <td>{{ manutencao.next_service }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class=" text-dark text-center">
+                        <th>Dt.saída</th>
+                        <th>Serviço</th>
+                        <th>Dt.entrega</th>
+                        <th>Fornecedor</th>
+                        <th>Veículo</th>
+                        <th>Marca</th>
+                        <th>Valor</th>
+                        <th>Prox.serviço</th>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="hero-animated" class="hero-animated d-flex align-items-center p-4">
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center"
+        data-aos="zoom-out">
+        <div class="container d-flex flex-column align-items-lg-start">
+            <div class="container pt-2">
+                <table class="table table-hover" id="fornecedor">
+                    <h2>Controle de Fornecedores</h2>
+                    <thead class="bg-success">
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Número</th>
+                            <th scope="col">Bairro</th>
+                            <th scope="col">Cidade</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fornecedor in fornecedores %}
+                        <tr>
+                            <td>{{ fornecedor.provide_name }}</td>
+                            <td>{{ fornecedor.address }}</td>
+                            <td>{{ fornecedor.number }}</td>
+                            <td>{{ fornecedor.district }}</td>
+                            <td>{{ fornecedor.city }}</td>
+                            <td>{{ fornecedor.phone_number }}</td>
+                            <td>{{ fornecedor.email }}</td>
+                            <td>{{ fornecedor.date_create }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class=" text-dark text-center">
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                        <th>Número</th>
+                        <th>Bairro</th>
+                        <th>Cidade</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Data</th>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="hero-animated" class="hero-animated d-flex align-items-center p-4">
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center"
+        data-aos="zoom-out">
+        <div class="container d-flex flex-column align-items-lg-start">
+            <div class="container pt-2">
+                <table class="table table-hover" id="trafego2">
+                    <h2>Controle de Tráfego</h2>
+                    <thead class="bg-success">
+                        <tr>
+                            <th scope="col">veículo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Dt.saída</th>
+                            <th scope="col">H.saída</th>
+                            <th scope="col">Km.saída</th>
+                            <th scope="col">Destino</th>
+                            <th scope="col">Dt.chegada</th>
+                            <th scope="col">H.chegada</th>
+                            <th scope="col">km.chegada</th>
+                            <th scope="col">Finalidade</th>
+                            <th scope="col">Dif</th>
+                            <th scope="col">Motorista</th>
+                            <th scope="col">Solicitado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trafego in trafegos %}
+                        <tr>
+                            <td>{{ trafego.vehicle }}</td>
+                            <td>{{ trafego.mark_traffic }}</td>
+                            <td>{{ trafego.departure_date }}</td>
+                            <td>{{ trafego.departure_time }}</td>
+                            <td>{{ trafego.km_of_exit }}</td>
+                            <td>{{ trafego.destiny }}</td>
+                            <td>{{ trafego.arrival_date }}</td>
+                            <td>{{ trafego.arrival_time }}</td>
+                            <td>{{ trafego.arrival_kml }}</td>
+                            <td>{{ trafego.service_purpose}}</td>
+                            <td>{{ trafego.difference }}</td>
+                            <td>{{ trafego.drivers_name }}</td>
+                            <td>{{ trafego.asked_by }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class=" text-dark text-center">
+                        <tr>
+                          <th>Veículo</th>
+                          <th>Marca</th>
+                          <th>Dt.daída</th>
+                          <th>H.saída</th>
+                          <th>Km.saída</th>
+                          <th>Destino</th>
+                          <th>Dt.chegada</th>
+                          <th>H.chegada</th>
+                          <th>Km.chegada</th>
+                          <th>Finalidade</th>
+                          <th>Dif</th>
+                          <th>Motorista</th>
+                          <th>Solicitado</th>
+                        </tr>
+                        </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endblock %}

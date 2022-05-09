@@ -1,0 +1,144 @@
+{% extends 'index.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<br><br><br><br><br>
+<!-- mensagem de cadastro -->
+<div class="container d-flex flex-column align-items-lg-start" id="fechar">
+  <div class="container pt-2">
+    <div class="row gy-4 gx-lg-4">
+      <div class="col-lg-12">
+        {% for message in messages %}
+        <div class="alert alert-success text-center" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fim da mensagem -->
+
+<!-- botão de cadastro e imprimir-->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ veiculo.id }}">Cadastrar</button>
+    <a href="{% url 'export_excel_manutencao' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
+  </div>
+</div>
+<!-- fim do botão -->
+
+<!-- tabela de veiculos -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container pt-2">
+      <table class="table table-hover" id="manutencao">
+          <thead class="bg-dark text-light text-center">
+              <tr>
+                  <th scope="col">Dt.saída</th>
+                  <th scope="col">Serviço</th>
+                  <th scope="col">Dt.entrega</th>
+                  <th scope="col">Fornecedor</th>
+                  <th scope="col">Veículo</th>
+                  <th scope="col">Marca</th>
+                  <th scope="col">Valor</th>
+                  <th scope="col">Prox.serviço</th>
+                  <th scope="col">Opção</th>
+              </tr>
+          </thead>
+          <tbody class="text-center">
+            {% for manutencao in manutencoes %}
+              <tr>
+                  <td>{{ manutencao.departure_date }}</td>
+                  <td>{{ manutencao.service }}</td>
+                  <td>{{ manutencao.delivery_date }}</td>
+                  <td>{{ manutencao.provider }}</td>
+                  <td>{{ manutencao.vehicle }}</td>
+                  <td>{{ manutencao.mark_main }}</td>
+                  <td>{{ manutencao.value }}</td>
+                  <td>{{ manutencao.next_service }}</td>
+                  <td>
+                    <!--<a href="{% url 'delete_manutencao' manutencao.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
+                    <a href="{% url 'update_manutencao' manutencao.id %}" class="btn btn-secondary bi bi-pencil-square"></a>
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          <tfoot class=" text-dark text-center">
+              <th>Dt.saída</th>
+              <th>Serviço</th>
+              <th>Dt.entrega</th>
+              <th>Fornecedor</th>
+              <th>Veículo</th>
+              <th>Marca</th>
+              <th>Valor</th>
+              <th>Prox.serviço</th>
+              <th>Opção</th>
+          </tfoot>
+      </table>
+  </div>
+</div>
+<!-- fim da tabela veiculos-->
+
+<!-- formulário do modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="#" id="exampleModalLabel">Controle de manutenção</h5>
+        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="p-3">
+        <form action="." method="post" class="form-group">{% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Data de Saída:</label>
+              {% render_field form.departure_date placeholder='dd/mm/aaaa' class+="form-control" %}
+              <br>
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label for="">Serviço a Ser Realizado:</label>
+              {% render_field form.service placeholder='Serviço' class+="form-control" %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Data de Entrega:</label>
+              {% render_field form.delivery_date placeholder='dd/mm/aaaa' class+="form-control" %}
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label for="">Fornecedor:</label>
+              {% render_field form.provider placeholder='Fornecedor' class+="form-control" %}
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Modelo do Veículo:</label>
+            {% render_field form.vehicle placeholder='Veículo' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Marca do Veículo:</label>
+            {% render_field form.mark_main placeholder='Veículo' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Valor:</label>
+            {% render_field form.value placeholder='R$' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Próximo Serviço:</label>
+            {% render_field form.next_service placeholder='dd/mm/aaaa' class+="form-control" %}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

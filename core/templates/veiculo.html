@@ -1,0 +1,122 @@
+{% extends 'index.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<br><br><br><br><br>
+<!-- mensagem de cadastro -->
+<div class="container d-flex flex-column align-items-lg-start" id="fechar">
+  <div class="container pt-2">
+    <div class="row gy-4 gx-lg-4">
+      <div class="col-lg-12">
+        {% for message in messages %}
+        <div class="alert alert-success text-center" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fim da mensagem -->
+
+<!-- botão de cadastro e imprimir -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Cadastrar</button>
+    <a href="{% url 'export_excel_veiculo' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
+  </div>
+</div>
+<!-- fim do botão -->
+
+<!-- tabela de veículo -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container pt-2">
+    <table class="table table-hover" id="tabela">
+      <thead class="bg-dark text-light text-center">
+        <tr>
+          <th scope="col">Marca</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Cor</th>
+          <th scope="col">Placa</th>
+          <th scope="col">Data</th>
+          <th scope="col">Opção</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for veiculo in veiculos %}
+        <tr>
+          <td>{{ veiculo.brand }}</td>
+          <td>{{ veiculo.vehicle }}</td>
+          <td>{{ veiculo.color }}</td>
+          <td>{{ veiculo.plate }}</td>
+          <td>{{ veiculo.date_create }}</td>
+          <td>
+            <!--<a href="{% url 'delete_veiculo' veiculo.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
+            <a href="{% url 'update_vehicle' veiculo.id %}" class="btn btn-secondary bi bi-pencil-square" data-target="#exampleModal"></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class=" text-dark text-center">
+        <tr>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Cor</th>
+          <th>Placa</th>
+          <th>Data</th>
+          <th>Opção</th>
+        </tr>
+        </tfoot>
+    </table>
+  </div>
+</div>
+<!-- fim da tabela veículo-->
+
+<!-- formulário do modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="#" id="exampleModalLabel">Cadastro de veículos</h5>
+        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="p-3">
+        <form action="." method="POST" class="form-group">{% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Marca</label>
+              {% render_field form.brand placeholder='Marca' class+="form-control" %}
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label>Modelo</label>
+              {% render_field form.vehicle placeholder='Modelo' class+="form-control" %}
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Cor</label>
+            {% render_field form.color placeholder='Cor' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Placa</label>
+            {% render_field form.plate placeholder='Placa' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Data</label>
+            {% render_field form.date_create placeholder='Data' class+="form-control" %}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>
+<!-- fim do formulário -->
+{% endblock %}

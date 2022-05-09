@@ -1,0 +1,146 @@
+{% extends 'index.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<br><br><br><br><br>
+<!-- mensagem de cadastro -->
+<div class="container d-flex flex-column align-items-lg-start" id="fechar">
+  <div class="container pt-2">
+    <div class="row gy-4 gx-lg-4">
+      <div class="col-lg-12">
+        {% for message in messages %}
+        <div class="alert alert-success text-center" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fim da mensagem -->
+
+<!-- botão de cadastro e imprimir -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ veiculo.id }}">Cadastrar</button>
+    <a href="{% url 'export_excel_abastecimento' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
+  </div>
+</div>
+<!-- fim do botão -->
+
+<!-- tabela de veiculos -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container pt-2">
+    <table class="table table-hover" id="tabela">
+      <thead class="bg-dark text-light text-center">
+        <tr>
+          <th scope="col">Litros</th>
+          <th scope="col">Km</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Pg</th>
+          <th scope="col">Motorista</th>
+          <th scope="col">Veículo</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Dt.abast</th>
+          <th scope="col">Opção</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for abastecimento in abastecimentos %}
+        <tr>
+          <td>{{ abastecimento.amount_ofag_liters }}</td>
+          <td>{{ abastecimento.milee }}</td>
+          <td>{{ abastecimento.supply_value }}</td>
+          <td>{{ abastecimento.payment }}</td>
+          <td>{{ abastecimento.driver_name }}</td>
+          <td>{{ abastecimento.vehicle }}</td>
+          <td>{{ abastecimento.mark_supply }}</td>
+          <td>{{ abastecimento.date_supply }}</td>
+          <td>
+            <!--<a href="{% url 'delete_abast' abastecimento.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
+            <a href="{% url 'update_abast' abastecimento.id %}" class="btn btn-secondary bi bi-pencil-square"></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class=" text-dark text-center">
+        <th>Litros</th>
+        <th>Km</th>
+        <th>Valor</th>
+        <th>Pg</th>
+        <th>Motorista</th>
+        <th>Veículo</th>
+        <th>Marca</th>
+        <th>Dt.abast</th>
+        <th>Opção</th>
+    </tfoot>
+    </table>
+  </div>
+</div>
+<!-- fim da tabela veiculos-->
+
+<!-- formulário do modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="#" id="exampleModalLabel">Contole de abastecimento</h5>
+        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="p-3">
+        <form action="." method="post" class="form-group">{% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 form-group-lg">
+              <label for="">Data de Abastecimento:</label>
+              {% render_field form.date_supply placeholder='dd/mm/aaaa' class+="form-control" %}
+              <br>
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label for="">Quantidade de Litros:</label>
+              {% render_field form.amount_ofag_liters placeholder='Lt' class+="form-control" %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Kilometragem:</label>
+              {% render_field form.milee placeholder='Km' class+="form-control" %}
+            </div>
+
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label for="">Valor Abastecimento:</label>
+              {% render_field form.supply_value placeholder='R$' class+="form-control" %}
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Pagamento:</label>
+            {% render_field form.payment class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Nome do Motorista:</label>
+            {% render_field form.driver_name placeholder='Nome' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Marca do Veículo:</label>
+            {% render_field form.vehicle class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Modelo do Veículo:</label>
+            {% render_field form.mark_supply class+="form-control" %}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

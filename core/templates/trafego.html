@@ -1,0 +1,189 @@
+{% extends 'index.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<br><br><br><br><br>
+<!-- mensagem de cadastro -->
+<div class="container d-flex flex-column align-items-lg-start" id="fechar">
+  <div class="container pt-2">
+    <div class="row gy-4 gx-lg-4">
+      <div class="col-lg-12">
+        {% for message in messages %}
+        <div class="alert alert-success text-center" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fim da mensagem -->
+
+<!-- botão de cadastro e imprimir -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ veiculo.id }}">Cadastrar</button>
+    <a href="{% url 'export_excel_trafego' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
+  </div>
+</div>
+<!-- fim do botão -->
+
+<!-- tabela de veiculos -->
+<div class="container d-flex flex-column align-items-lg-start">
+  <div class="container pt-2">
+    <table class="table table-hover" id="trafego">
+      <thead class="bg-dark text-light text-center">
+        <tr>
+          <th scope="col">Veículo</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Dt.saída</th>
+          <th scope="col">H.saída</th>
+          <th scope="col">Km.saída</th>
+          <th scope="col">Destino</th>
+          <th scope="col">Dt.chegada</th>
+          <th scope="col">H.chegada</th>
+          <th scope="col">km.chegada</th>
+          <th scope="col">Finalidade</th>
+          <th scope="col">Dif</th>
+          <th scope="col">Motorista</th>
+          <th scope="col">Solicitado</th>
+          <th scope="col">Opção</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+      {% for trafego in trafegos %}
+      <tr>
+          <td>{{ trafego.vehicle }}</td>
+          <td>{{ trafego.mark_traffic }}</td>
+          <td>{{ trafego.departure_date }}</td>
+          <td>{{ trafego.departure_time }}</td>
+          <td>{{ trafego.km_of_exit }}</td>
+          <td>{{ trafego.destiny }}</td>
+          <td>{{ trafego.arrival_date }}</td>
+          <td>{{ trafego.arrival_time }}</td>
+          <td>{{ trafego.arrival_kml }}</td>
+          <td>{{ trafego.service_purpose}}</td>
+          <td>{{ trafego.difference }}</td>
+          <td>{{ trafego.drivers_name }}</td>
+          <td>{{ trafego.asked_by }}</td>
+          <td>
+            <!--<a href="{% url 'delete_trafego' trafego.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
+            <a href="{% url 'update_trafego' trafego.id %}" class="btn btn-secondary bi bi-pencil-square"></a>
+          </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot class=" text-dark text-center">
+        <tr>
+          <th>Veículo</th>
+          <th>Marca</th>
+          <th>Dt.daída</th>
+          <th>H.saída</th>
+          <th>Km.saída</th>
+          <th>Destino</th>
+          <th>Dt.chegada</th>
+          <th>H.chegada</th>
+          <th>Km.chegada</th>
+          <th>Finalidade</th>
+          <th>Dif</th>
+          <th>Motorista</th>
+          <th>Solicitado</th>
+          <th scope="col">Opção</th>
+        </tr>
+        </tfoot>
+    </table>
+  </div>
+</div>
+<br>
+<!-- fim da tabela veiculos-->
+
+<!-- formulário do modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="#" id="exampleModalLabel">Controle de tráfego</h5>
+        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="p-3">
+        <form action="." method="post" class="form-group">{% csrf_token %}
+          <div class="form-group mt-3">
+            <label for="">Marca do Veículo:</label>
+            {% render_field form.vehicle placeholder='Moldelo' class+="form-control" %}
+          </div>
+          <div class="form-group mt-3">
+            <label for="">Modelo do Veículo:</label>
+            {% render_field form.mark_traffic placeholder='Moldelo' class+="form-control" %}
+            <br>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Data da Saída:</label>
+              {% render_field form.departure_date placeholder='dd/mm/aaaa' class+="form-control" %}
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+              <label for="">Horário da Saída:</label>
+              {% render_field form.departure_time placeholder='00:00' class+="form-control" %}
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+              <label for="">Km de Saída:</label>
+              {% render_field form.km_of_exit placeholder='Km de saída' class+="form-control" %}
+              <br>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Data de Chegada:</label>
+              {% render_field form.arrival_date placeholder='dd/mm/aaaa' class+="form-control" %}
+              <br>
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+              <label for="">Horário de chegada:</label>
+              {% render_field form.arrival_time placeholder='00:00' class+="form-control" %}
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+              <label for="">Km de Chegada:</label>
+              {% render_field form.arrival_kml placeholder='Km de chegada' class+="form-control" %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="">Destino:</label>
+              {% render_field form.destiny placeholder='Destino' class+="form-control" %}
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="">Diferença:</label>
+              {% render_field form.difference placeholder='Diferença' class+="form-control" %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group mt-3">
+              <label for="">Finalidade do Serviço:</label>
+              {% render_field form.service_purpose placeholder='Finalidade' class+="form-control" %}
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="">Nome do Motorista:</label>
+            {% render_field form.drivers_name placeholder='Nome motorista' class+="form-control" %}
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="">Solicitado Por:</label>
+            {% render_field form.asked_by placeholder='Solicitação' class+="form-control" %}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
