@@ -73,7 +73,7 @@ $(document).ready( function () {
 
 $(document).ready(function() {
     $('#trafego').DataTable( {
-        "scrollY": 340,
+        "scrollY": 345,
         "scrollX": true,
 
         "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#trafego2').DataTable( {
-        "scrollY": 340,
+        "scrollY": 345,
         "scrollX": true,
 
         "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
