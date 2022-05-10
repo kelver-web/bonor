@@ -12,7 +12,8 @@ from .models import Vehicle, Provider, Supply, Maintenance, Traffic
 
 # Create your views here.
 
-@login_required
+
+@login_required(login_url='login')
 def index(request):
     veiculos = Vehicle.objects.all()
     fornecedores = Provider.objects.all()
