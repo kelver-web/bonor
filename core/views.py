@@ -72,8 +72,10 @@ def update_abast(request, id):
             messages.info(request, 'Ops, algo deu errado!')
             
         return redirect('abast')
+    
+    abastecimentos = Supply.objects.all()
 
-    return render(request, 'abast.html', {'abastecimento': abastecimento, 'form': form})
+    return render(request, 'abast.html', {'abastecimento': abastecimento, 'abastecimentos': abastecimentos, 'form': form})
 
 
 @login_required(login_url='login')
@@ -247,7 +249,9 @@ def update_manutencao(request, id):
 
         return redirect('manutencao')
 
-    return render(request, 'manutencao.html', {'manutencao': manutencao, 'form': form,})
+    manutencoes = Maintenance.objects.all()
+
+    return render(request, 'manutencao.html', {'manutencao': manutencao, 'manutencoes': manutencoes, 'form': form,})
     
 
 @login_required(login_url='login')
@@ -418,7 +422,9 @@ def update_vehicle(request, id):
         
         return redirect('cadastro_veiculo')
 
-    return render(request, 'veiculo.html', {'veiculo': veiculo, 'form': form})
+    veiculos = Vehicle.objects.all()
+    
+    return render(request, 'veiculo.html', {'veiculo': veiculo, 'veiculos': veiculos, 'form': form})
 
 
 @login_required(login_url='login')

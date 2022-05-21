@@ -23,7 +23,7 @@
 <!-- botão de cadastro e imprimir -->
 <div class="container d-flex flex-column align-items-lg-start">
   <div class="container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ veiculo.id }}">Cadastrar</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="idfornecedor">Cadastrar</button>
     <a href="{% url 'export_excel_fornecedor' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
   </div>
 </div>
@@ -61,7 +61,7 @@
           <td>{{ fornecedor.date_create }}</td>
           <td>
             <!--<a href="{% url 'delete_fornecedor' fornecedor.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
-            <a href="{% url 'update_fornecedor' fornecedor.id %}" class="btn btn-secondary bi bi-pencil-square"></a>
+            <a href="{% url 'update_fornecedor' fornecedor.id %}"><button class="btn btn-secondary bi bi-pencil-square" data-target="#exampleModal" data-toggle="modal"></button></a>
         </tr>
         {% endfor %}
       </tbody>
@@ -90,51 +90,51 @@ aria-hidden="true">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="#" id="exampleModalLabel">Cadastro de fornecedor</h5>
-        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+        <a href="{% url 'fornecedor' %}"><button type="button" class="close c-ptimary rounded" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button></a>
       </div>
       <div class="p-3">
         <form action="." method="POST" class="form-group">{% csrf_token %}
           <div class="row">
             <div class="col-md-6 form-group">
               <label for="">Nome do Fornecedor:</label>
-              {% render_field form.provide_name class+="form-control" %}
+              {% render_field form.provide_name placeholder='Nome' class+="form-control" %}
               <br>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
               <label for="">Endereço:</label>
-              {% render_field form.address class+="form-control" %}
+              {% render_field form.address placeholder='Endereço' class+="form-control" %}
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
               <label for="">Número:</label>
-              {% render_field form.number class+="form-control" %}
+              {% render_field form.number placeholder='Número' class+="form-control" %}
               <br>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
               <label for="">Bairro:</label>
-              {% render_field form.district class+="form-control" %}
+              {% render_field form.district placeholder='Bairro' class+="form-control" %}
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
               <label for="">Cidade:</label>
-              {% render_field form.city class+="form-control" %}
+              {% render_field form.city placeholder='Cidade' class+="form-control" %}
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
               <label for="">Telefone:</label>
-              {% render_field form.phone_number class+="form-control" %}
+              {% render_field form.phone_number placeholder='Telefone' class+="form-control" %}
             </div>
           </div>
           <div class="form-group mt-3">
             <label for="">Data:</label>
-            {% render_field form.date_create class+="form-control" %}
+            {% render_field form.date_create placeholder='dd/mm/aaaa' class+="form-control" %}
           </div>
           <div class="form-group mt-3">
             <label for="">Email:</label>
-            {% render_field form.email class+="form-control" %}
+            {% render_field form.email placeholder='Email' class+="form-control" %}
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <a href="{% url 'fornecedor' %}"><button type="button" class="btn btn-secondary">Fechar</button></a>
           </div>
         </form>
       </div>
@@ -142,4 +142,16 @@ aria-hidden="true">
   </div>
 </div>
 <!-- fim do formulário -->
+
+<script>
+  window.onload = function (){
+    let botaomodal = document.getElementById('idfornecedor')
+    let variavel = window.location.pathname
+    if(variavel.includes("update-fornecedor")){
+      botaomodal.click()
+    }
+    
+  }
+
+</script>
 {% endblock %}

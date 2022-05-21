@@ -25,7 +25,7 @@
 <!-- botão de cadastro e imprimir-->
 <div class="container d-flex flex-column align-items-lg-start">
   <div class="container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ veiculo.id }}">Cadastrar</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="idmanutencao">Cadastrar</button>
     <a href="{% url 'export_excel_manutencao' %}"><button type="button" class="btn btn-secondary float-end">Imprimir</button></a> 
   </div>
 </div>
@@ -61,7 +61,7 @@
                   <td>{{ manutencao.next_service }}</td>
                   <td>
                     <!--<a href="{% url 'delete_manutencao' manutencao.id %}" class="btn btn-danger bi bi-trash3-fill"></a>-->
-                    <a href="{% url 'update_manutencao' manutencao.id %}" class="btn btn-secondary bi bi-pencil-square"></a>
+                    <a href="{% url 'update_manutencao' manutencao.id %}"><button class="btn btn-secondary bi bi-pencil-square" data-target="#exampleModal" data-toggle="modal"></button></a>
                   </td>
               </tr>
               {% endfor %}
@@ -88,9 +88,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="#" id="exampleModalLabel">Controle de manutenção</h5>
-        <button type="button" class="close c-ptimary rounded" data-dismiss="modal" aria-label="Fechar">
+        <a href="{% url 'manutencao' %}"><button type="button" class="close c-ptimary rounded" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button></a>
       </div>
       <div class="p-3">
         <form action="." method="post" class="form-group">{% csrf_token %}
@@ -133,12 +133,24 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <a href="{% url 'manutencao' %}"><button type="button" class="btn btn-secondary">Fechar</button></a>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  window.onload = function (){
+    let botaomodal = document.getElementById('idmanutencao')
+    let variavel = window.location.pathname
+    if(variavel.includes("update-manutencao")){
+      botaomodal.click()
+    }
+    
+  }
+
+</script>
 
 {% endblock %}
